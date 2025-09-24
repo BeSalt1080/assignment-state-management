@@ -83,9 +83,20 @@ class _MyAppBar extends StatelessWidget {
       ),
       floating: true,
       actions: [
-        IconButton(
-          icon: const Icon(Icons.shopping_cart),
-          onPressed: () => context.go('/catalog/cart'),
+        Padding(
+          padding: const EdgeInsets.only(right: 8),
+          child: Badge(
+            label: Consumer<CartModel>(
+              builder: (context, cart, child) => Text('${cart.items.length}'),
+            ),
+            isLabelVisible: context.select<CartModel, bool>(
+              (cart) => cart.items.isNotEmpty,
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.shopping_cart),
+              onPressed: () => context.go('/catalog/cart'),
+            ),
+          ),
         ),
       ],
     );
